@@ -1,0 +1,40 @@
+# Example churnbench config. Model ids are placeholders, not real models.
+
+[project]
+name = "ledger-demo"
+workdir = "fixtures/ledger"            # copied to a temp dir per run
+
+[matrix]
+baseline  = "claude-code:model-a"      # adapter:model-id
+candidate = "claude-code:model-b"
+runs = 10
+max_budget_usd = 5.00                  # per live matrix; abort when exceeded
+
+[adapter.claude-code]
+mode = "project"                       # "project" loads CLAUDE.md, skills and hooks; "bare" does not
+permission_mode = "dontAsk"
+allowed_tools = ["Read", "Edit", "Bash(python -m pytest *)"]
+
+[[task]]
+id = "add-fee-rule"
+prompt = "Add a 2 percent fee to transfers over 1000 and update tests."
+timeout_s = 300
+  [[task.check]]                       # outcome check, runs in the sandbox after the agent
+  kind = "command"
+  run = "python -m pytest -q"
+  expect_exit = 0
+  [[task.invariant]]                   # zero-tolerance
+  kind = "never_edit"
+  path_glob = "vendor/**"
+  [[task.invariant]]
+  kind = "tool_before_finish"
+  tool = "Bash"
+  contains = "pytest"
+
+[variant.candidate]                    # optional setup overlay (e.g. a revised CLAUDE.md)
+overlay = "variants/claude-md-v2"
+
+[verdict]
+alpha = 0.05
+min_drop = 0.20                        # smallest pass-rate drop that counts
+min_runs = 5
