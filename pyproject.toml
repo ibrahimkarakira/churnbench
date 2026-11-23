@@ -1,0 +1,43 @@
+[project]
+name = "churnbench"
+version = "0.0.1"
+description = "Will your agent setup survive the next model? Re-run your coding-agent setup across model versions and gate the upgrade."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Ibrahim Karakira" }]
+requires-python = ">=3.11"
+dependencies = []
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Environment :: Console",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Testing",
+]
+
+[project.urls]
+Repository = "https://github.com/ibrahimkarakira/churnbench"
+
+[project.scripts]
+churnbench = "churnbench.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.8"]
+
+[build-system]
+# The uv docs (concepts/build-backend, checked 2026-11-23) show uv_build>=0.13.9,<0.14. Pinned
+# instead to the maintainer's local uv minor (0.11): with uv 0.11.2 as the frontend and
+# uv_build==0.13.9, `uv build` exits 2 with "I/O operation failed during extraction" (reproduced
+# 2026-11-23, output in the D01 PR body). Root cause [UNCLEAR]. Bump together with the local uv.
+requires = ["uv_build>=0.11.2,<0.12"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
