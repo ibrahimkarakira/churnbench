@@ -6,3 +6,4 @@ All notable changes to this project are recorded here. The format follows [Keep 
 
 - Add the package skeleton, `churnbench --version` and the local check script `scripts/check.py` (#1).
 - Add the `churnbench.toml` loader with key-path error messages and an example config (#3).
+- Add the normalized trace model with a JSONL round trip and `docs/trace-format.md` (#10).
