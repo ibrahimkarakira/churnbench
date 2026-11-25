@@ -8,3 +8,4 @@ All notable changes to this project are recorded here. The format follows [Keep 
 - Add the `churnbench.toml` loader with key-path error messages and an example config (#3).
 - Add the normalized trace model with a JSONL round trip and `docs/trace-format.md` (#10).
 - Add the mock replay adapter, a seeded demo fixture generator and the invented `fixtures/ledger` repo (#11).
+- Add the per-run sandbox copy with overlay and `command` outcome checks with exit code, output tail and timeout (#12).
